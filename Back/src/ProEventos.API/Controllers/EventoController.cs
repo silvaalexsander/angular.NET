@@ -20,7 +20,7 @@ public class EventoController : ControllerBase
     [HttpGet]
     public IEnumerable<Evento> Get()
     {
-        return _context.Eventos;
+        return _context.Eventos.OrderByDescending(e => e.EventoID);
     }
 
     [HttpGet("{id}")]
