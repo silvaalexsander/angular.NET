@@ -56,6 +56,7 @@ export class EventosComponent implements OnInit {
       response => {this.eventos = response; this.eventosFiltrados = this.eventos;},
       error => console.log(error)
     );
+
   }
 
 }

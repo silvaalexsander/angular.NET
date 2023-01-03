@@ -27,8 +27,8 @@
     </thead>
     <tbody *ngIf="eventos && eventos.length">
         <tr *ngFor="let evento of eventosFiltrados">
-            <td>{{evento.eventoID}}</td>
-            <td>
+            <td>{{evento.id}}</td>
+            <td class="lg-center">
                 <img  [collapse]="isCollapsed" [isAnimated]="true"
                 src="/assets/imgs/{{evento.imagemURL}}"
                 alt="foto"
