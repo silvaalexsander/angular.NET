@@ -16,7 +16,11 @@
     <thead class="thead-dark">
        <tr>
         <th>#</th>
-        <th><button (click)="mudaFrase()"  (click)="isCollapsed = !isCollapsed" class="btn btn-outline-ligth btn-dark">{{frase}}</button></th>
+        <th>
+          <button (click)="mudaFrase()"  (click)="isCollapsed = !isCollapsed" class="btn btn-outline-ligth btn-dark">
+            <i class="{{!mudaFrase ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
+            {{frase}}
+          </button></th>
         <th>Tema</th>
         <th>Local</th>
         <th>Data</th>
@@ -38,12 +42,18 @@
             </td>
             <td>{{evento.tema}}</td>
             <td>{{evento.local}}</td>
-            <td>{{evento.dataEvento}}</td>
+            <td>{{evento.dataEvento | DataTimeFormatPipe}}</td>
             <td>{{evento.qtdPessoa}}</td>
             <td>{{evento.lote}}</td>
             <td>
-                <button type="button" class="btn btn-primary btn-sm mr-2">Editar</button>
-                <button type="button" class="btn btn-danger btn-sm ms-2">Excluir</button>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-sm mr-2" tooltip="Editar" (click)="openModal(template)">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm ms-2" tooltip="Excluir" (click)="openModal(template)" >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
             </td>
         </tr>
     </tbody>
@@ -55,3 +65,11 @@
         </tr>
     </tfoot>
 </table>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que deseja deletar o evento?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()">Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">Não</button>
+  </div>
+</ng-template>

@@ -1,5 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { Evento } from 'src/app/model/Evento';
+import { EventoService } from 'src/app/services/evento.service';
 
 @Component({
   selector: 'app-eventos',
@@ -8,11 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventosComponent implements OnInit {
 
-  public eventos: any = [];
+  modalRef: BsModalRef | undefined;
+  public eventos: Evento[] = [] ;
   public eventosFiltrados: any = [];
-  widthImg: number = 50;
-  marginImg: number = 2;
-  frase: string = '';
+  public widthImg: number = 50;
+  public marginImg: number = 2;
+  public frase: string = '';
   isCollapsed: boolean = true;
   private _filtroLista: string = '';
 
@@ -26,37 +30,57 @@ export class EventosComponent implements OnInit {
     this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos;
   }
 
-  filtrarEventos(filtrarPor: string): any {
+  public filtrarEventos(filtrarPor: string): Evento[] {
     filtrarPor = filtrarPor.toLowerCase();
     return this.eventos.filter(
       (evento: { tema: string; local: string}) => evento.tema.toLowerCase().indexOf(filtrarPor) !== -1 ||
       evento.local.toLowerCase().indexOf(filtrarPor) !== -1);
   }
-  constructor(private http: HttpClient) { }
+  constructor(
+    private eventoService : EventoService,
+    private modalService: BsModalService,
+    private toastr: ToastrService
+    )
+    { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getEventos();
-    if(this.isCollapsed){
-      this.frase = 'Mostrar Imagens';
-    }else{
-      this.frase = 'Esconder Imagens';
-    }
+    this.mudaFrase();
   }
 
-  public mudaFrase(){
+  public mudaFrase(): boolean{
     if(!this.isCollapsed){
-      this.frase = 'Mostrar Imagens';
+      this.frase = 'Exibir';
+      return true;
     }else{
-      this.frase = 'Esconder Imagens';
+      this.frase = 'Ocultar';
+      return false;
     }
   }
 
-  public getEventos(){
-    this.http.get('https://localhost:7150/api/Evento').subscribe(
-      response => {this.eventos = response; this.eventosFiltrados = this.eventos;},
-      error => console.log(error)
-    );
+  public getEventos(): void{
+    this.eventoService.getEventos().subscribe(
+      {next: (_eventos : Evento[]) => {
+        this.eventos = _eventos;
+        this.eventosFiltrados = this.eventos;
+      },
+      error: (error : any) => console.log(error)
+  });
 
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.modalRef?.hide();
+    this.toastr.success('Evento deletado com sucesso!', 'Sucesso!');
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
+    this.toastr.error('Ação cancelada!', 'Cancelado!');
   }
 
 }
