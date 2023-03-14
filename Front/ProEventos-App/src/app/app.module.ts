@@ -15,6 +15,7 @@ import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule} from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import { ToastrModule} from 'ngx-toastr';
       progressBar: true,
       progressAnimation: 'decreasing',
     }),
-    
+    NgxSpinnerModule,
   ],
   providers: [
     EventoService,
