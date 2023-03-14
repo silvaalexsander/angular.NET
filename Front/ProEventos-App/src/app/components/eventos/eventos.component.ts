@@ -1,6 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Evento } from 'src/app/model/Evento';
 import { EventoService } from 'src/app/services/evento.service';
@@ -41,15 +40,10 @@ export class EventosComponent implements OnInit {
     private eventoService : EventoService,
     private modalService: BsModalService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService,
     )
     { }
 
   public ngOnInit(): void {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
     this.getEventos();
     this.mudaFrase();
   }

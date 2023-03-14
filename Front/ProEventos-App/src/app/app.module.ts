@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { EventosComponent } from './components/eventos/eventos.component';
 import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavComponent } from './components/nav/nav.component';
+import { NavComponent } from './shared/nav/nav.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule } from '@angular/forms';
 import { EventoService } from './services/evento.service';
@@ -15,7 +15,10 @@ import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule} from 'ngx-toastr';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TituloComponent } from './shared/titulo/titulo.component';
 
 
 @NgModule({
@@ -23,6 +26,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AppComponent,
     EventosComponent,
     PalestrantesComponent,
+    PerfilComponent,
+    ContatosComponent,
+    DashboardComponent,
+    TituloComponent,
     NavComponent,
     DataTimeFormatPipe
   ],
@@ -43,7 +50,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       progressBar: true,
       progressAnimation: 'decreasing',
     }),
-    NgxSpinnerModule,
   ],
   providers: [
     EventoService,
