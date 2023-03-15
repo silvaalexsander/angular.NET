@@ -15,23 +15,33 @@ import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule} from 'ngx-toastr';
-import { PerfilComponent } from './components/perfil/perfil.component';
+import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
+import { EnventoDetelheComponent } from './components/eventos/envento-detelhe/envento-detelhe.component';
+import { EventoListaComponent } from './components/eventos/evento-lista/evento-lista.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegistrationComponent } from './components/user/registration/registration.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     EventosComponent,
+    EnventoDetelheComponent,
+    EventoListaComponent,
     PalestrantesComponent,
     PerfilComponent,
     ContatosComponent,
     DashboardComponent,
     TituloComponent,
     NavComponent,
-    DataTimeFormatPipe
+    DataTimeFormatPipe,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
