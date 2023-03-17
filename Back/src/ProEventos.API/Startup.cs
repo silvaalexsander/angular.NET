@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ProEventos.Application;
@@ -13,23 +14,35 @@ namespace ProEventos.API
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+                public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ProEventosContext>(
-                context => context.UseSqlite(Configuration.GetConnectionString("Default"))
+               context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
-            services.AddControllers()
-                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
-                    Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                );
-                
+
+
+            services.AddControllers().AddJsonOptions(options =>
+                      options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+                )
+                  .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling =
+                       Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+
             services.AddScoped<IEventoService, EventoService>();
+
             services.AddScoped<IGeralPersist, GeralPersistence>();
             services.AddScoped<IEventoPersist, EventoPersistence>();
-            services.AddCors();
+
+
+            services.AddCors( options => {
+                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos.API", Version = "v1" });
@@ -52,11 +65,8 @@ namespace ProEventos.API
 
             app.UseAuthorization();
 
-            app.UseCors(cors => cors.AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowAnyOrigin()
-            );
-
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

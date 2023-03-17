@@ -1,5 +1,4 @@
-using ProEventos.Domain;
-
+using System.Threading.Tasks;
 namespace ProEventos.Persistence
 {
     public interface IGeralPersist

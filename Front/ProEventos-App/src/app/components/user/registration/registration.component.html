@@ -11,47 +11,113 @@
 
 
 
-<form class="p-1">
+<form class="p-1" [formGroup]="form">
 	<div class="pb-2 d-block d-md-none">
 		<h3 class="border-bottom">Cadastro de Usuário</h3>
 	</div>
+
 	<div class="form-row">
+
 		<div class="form-group col-sm-6">
 			<label>Primeiro Nome</label>
-			<input type="text" class="form-control" placeholder="Insira o Primeiro nome" />
+			<input type="text"
+      class="form-control"
+      formControlName="nome"
+      [ngClass]="{'is-invalid': f.nome.errors && f.nome.touched}"
+      placeholder="Insira o Primeiro nome" />
+      <div  class="invalid-feedback">
+        <span *ngIf="f.nome.errors?.required">O nome é obrigatório</span>
+        <span *ngIf="f.nome.errors?.minlength">O nome deve ter no minimo 4 caracteres</span>
+        <span *ngIf="f.nome.errors?.maxlength">O nome deve ter no máximo 15 caracteres</span>
+      </div>
 		</div>
+
 		<div class="form-group col-sm-6">
 			<label>Último nome</label>
-			<input type="text" class="form-control" placeholder="Insira o Último nome" />
+			<input type="text"
+      class="form-control"
+      formControlName="sobrenome"
+      [ngClass]="{'is-invalid': f.sobrenome.errors && f.sobrenome.touched}"
+       placeholder="Insira o Último nome" />
+       <div  class="invalid-feedback">
+        <span *ngIf="f.sobrenome.errors?.required">O sobrenome é obrigatório</span>
+        <span *ngIf="f.sobrenome.errors?.minlength">O sobrenome deve ter no minimo 4 caracteres</span>
+        <span *ngIf="f.sobrenome.errors?.maxlength">O sobrenome deve ter no máximo 50 caracteres</span>
+       </div>
 		</div>
+
 	</div>
+
 	<div class="form-group">
-		<label for="">Email:</label>
-		<input class="form-control" type="text" placeholder="Insira o Nome Completo" />
+		<label for="">E-mail:</label>
+		<input class="form-control"
+    formControlName="email"
+    type="email"
+    [ngClass]="{'is-invalid': f.email.errors && f.email.touched}"
+    placeholder="E-mail" />
+    <div  class="invalid-feedback">
+      <span *ngIf="f.email.errors?.required">O e-mail é obrigatório</span>
+      <span *ngIf="f.email.errors?.email">O e-mail deve manter o formato "exemplo@exemplo.com"</span>
+    </div>
 	</div>
+
+
 	<div class="form-group">
 		<label for="">Usuario:</label>
-		<input class="form-control" type="text" placeholder="Insira o nome de Usuário" />
+		<input class="form-control"
+    formControlName="usuario"
+    type="text"
+    [ngClass]="{'is-invalid': f.usuario.errors && f.usuario.touched}"
+    placeholder="Insira o nome de Usuário" />
+    <div  class="invalid-feedback">
+      <span *ngIf="f.usuario.errors?.required">O número de usuário é obrigatório</span>
+      <span *ngIf="f.usuario.errors?.minlength">O número de usuário deve ter no minimo 4 caracteres</span>
+      <span *ngIf="f.usuario.errors?.maxlength">O número de usuário deve ter no máximo 15 caracteres</span>
+    </div>
 	</div>
+
+
 	<div class="form-row">
+
 		<div class="form-group col-sm-6">
 			<label for="">Senha:</label>
-			<input class="form-control" type="password" placeholder="Digite uma Senha" />
+			<input class="form-control"
+      formControlName="senha"
+      type="password"
+      [ngClass]="{'is-invalid': f.senha.errors && f.senha.touched}"
+      placeholder="Digite uma Senha" />
+      <div  class="invalid-feedback">
+        <span *ngIf="f.senha.errors?.required">A senha é obrigatória</span>
+        <span *ngIf="f.senha.errors?.minlength">A senha deve ter no mínimo 6 caracteres</span>
+      </div>
 		</div>
+
 		<div class="form-group col-sm-6">
 			<label for="">Confirmar Senha:</label>
-			<input class="form-control" type="password" placeholder="Confirme a Senha" />
+			<input class="form-control"
+      formControlName="confirm"
+      type="password"
+      [ngClass]="{'is-invalid': f.confirm.errors && f.confirm.touched}"
+      placeholder="Confirme a Senha" />
+      <div class="invalid-feedback">
+        <span *ngIf="f.confirm.errors?.required" >A confirmação da senha é obrigatória</span>
+        <span *ngIf="f.confirm.errors?.mustMatch" >As senhas não coincidem</span>
+      </div>
 		</div>
+
+
 	</div>
 	<div class="form-row p-1 mb-3">
 		<div class="custom-control custom-checkbox">
-			<input type="checkbox" class="custom-control-input" id="customCheck1">
+			<input type="checkbox"
+       class="custom-control-input"
+        id="customCheck1">
 			<label class="custom-control-label">Eu concordo com os <a href="#">Termos de Uso</a>.</label>
 		</div>
 	</div>
 	<div class="form-row">
 		<div class="form-group col-12">
-			<button class="btn btn-lg btn-dark btn-block px-5">
+			<button class="btn btn-lg btn-dark btn-block px-5" [disabled]="!form.valid">
 				Registar
 			</button>
 		</div>
