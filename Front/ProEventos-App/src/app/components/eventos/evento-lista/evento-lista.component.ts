@@ -20,7 +20,7 @@ export class EventoListaComponent implements OnInit {
   public frase: string = '';
   isCollapsed: boolean = true;
   private _filtroLista: string = '';
-
+  public eventoId: number = 0;
 
   public get filtroLista() {
     return this._filtroLista;
@@ -71,13 +71,26 @@ export class EventoListaComponent implements OnInit {
 
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(event: any, template: TemplateRef<any>, eventoId: number): void {
+    event.stopPropagation();
+    this.eventoId = eventoId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
   confirm(): void {
     this.modalRef?.hide();
-    this.toastr.success('Evento deletado com sucesso!', 'Sucesso!');
+    this.eventoService.deleteEvento(this.eventoId).subscribe(
+      {
+        next: (result: any) => {
+            console.log(result);
+            this.toastr.success('Evento deletado com sucesso!', 'Sucesso!');
+            this.getEventos();
+         },
+        error: (error: any) => {console.error(error); this.toastr.error('Erro ao tentar deletar evento', 'Erro'); },
+        complete: () => {}
+      }
+    );
+
   }
 
   decline(): void {

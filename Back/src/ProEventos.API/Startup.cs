@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using ProEventos.Application;
 using ProEventos.Application.Contratos;
 using ProEventos.Persistence;
+using AutoMapper;
 
 namespace ProEventos.API
 {
@@ -31,6 +32,7 @@ namespace ProEventos.API
                        Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IEventoService, EventoService>();
 

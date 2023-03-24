@@ -32,9 +32,12 @@
       <div class="form-group col-md-4">
         <label>Data e Hora</label>
         <input type="datetime"
+        bsDatepicker
+        [bsConfig]="bsConfig"
         class="form-control"
         formControlName="dataEvento"
         [ngClass]="{'is-invalid': f.dataEvento.errors && f.dataEvento.touched}"
+        value="{{evento.dataEvento | DataTimeFormatPipe}}"
         placeholder="20/10/2023">
         <div class="invalid-feedback">
           <span *ngIf="f.dataEvento.errors?.required">Data é obrigatório</span>
@@ -43,20 +46,21 @@
     </div>
 
     <div class="form-row">
+
       <div class="form-group col-md-2">
         <label>Qtd Pessoas</label>
         <input type="number"
-        class="form-control is-invalid "
-        formControlName="qtdPessoas"
-        [ngClass]="{'is-invalid': f.qtdPessoas.errors && f.qtdPessoas.touched}"
+        class="form-control "
+        formControlName="qtdPessoa"
+        [ngClass]="{'is-invalid': f.qtdPessoa.errors && f.qtdPessoa.touched}"
         placeholder="ex: 1500">
         <div class="invalid-feedback">
-          <span *ngIf="f.qtdPessoas.errors?.required">Quantidade de pessoas é obrigatório</span>
-          <span *ngIf="f.qtdPessoas.errors?.min">Quantidade de pessoas deve ser no minimo 1</span>
-          <span *ngIf="f.qtdPessoas.errors?.max">Quantidade de pessoas deve ser no máximo 12000</span>
+          <span *ngIf="f.qtdPessoa.errors?.required">Quantidade de pessoas é obrigatório</span>
+          <span *ngIf="f.qtdPessoa.errors?.min">Quantidade de pessoas deve ser no minimo 1</span>
+          <span *ngIf="f.qtdPessoa.errors?.max">Quantidade de pessoas deve ser no máximo 12000</span>
         </div>
-
       </div>
+
       <div class="form-group col-md-2">
         <label>Telefone</label>
         <input type="text"
@@ -101,7 +105,7 @@
       <button class="btn btn-outline-secondary mr-auto border" (click)="reset()">
         Cancelar Alteração
       </button>
-      <button class="btn btn-dark" [disabled]="!form.valid">
+      <button class="btn btn-dark" [disabled]="!form.valid" (click)="salvarEvento()">
         <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
         Salvar Evento
       </button>
