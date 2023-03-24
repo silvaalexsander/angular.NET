@@ -1,0 +1,2 @@
+*.pack filter=lfs diff=lfs merge=lfs -text
+Front/ProEventos-App/.angular/cache/15.0.5/angular-webpack/*.pack filter=lfs diff=lfs merge=lfs -text
